@@ -49,8 +49,9 @@ $i=0;
 $labelOn=0;
 $message="";
 $firstNews="";
-
 foreach ($row as $value){
+    //echo $value;
+    //echo "<br>";
     if (preg_match('/Title"/',$value))
     {
         $value=str_replace('Title":"',"",$value);
@@ -60,8 +61,31 @@ foreach ($row as $value){
         //echo $value;
         $i++;
     }
+    if(preg_match('/Description":"/',$value))
+    {
+        $value=str_replace('Description":""',"",$value);
+        $value=str_replace('\n',"",$value);
+        $value=str_replace('"',"",$value);
+        $value=str_replace('Description":"',"",$value);
+        $value=str_replace('Description:',"",$value);
+        $value=str_replace('<p>',"",$value);
+        $value=str_replace('</p>',"",$value);
+        $value=str_replace('<ul><li>',"
+        
+* ",$value);
+        $value=str_replace('</li><li>',"
+        
+* ",$value);
+        $value=str_replace('</li></ul>',"
+",$value);
+        echo "<a style='color: cornflowerblue'>$value</a>";
+        $message=$message."
+        ".$value;
+
+    }
+
     if(preg_match('/Labels":\[\]/',$value)){
-        echo "vojod darad bedoneHashtag?!".isNews($message);
+        echo "<a style='color: yellow'>vojod darad bedoneHashtag?!</a>".isNews($message);
         if (!isNews($message))
         {
             echo "<br>send<br>";
@@ -78,7 +102,7 @@ foreach ($row as $value){
         $label=str_replace(' ',"_",$label);
         $message=$message."
 #".$label;
-        echo "vojod darad yek Hashtag?!".isNews($message);
+        echo "<a style='color: green'>vojod darad yek Hashtag?!</a>".isNews($message);
         if (!isNews($message))
         {
             echo "<br>send<br>";
@@ -107,7 +131,7 @@ foreach ($row as $value){
         $label=str_replace('"]',"",$value);
         $label=str_replace(' ',"_",$label);
         $message=$message." #".$label;
-        echo "vojod darad Chand Hashtag?!".isNews($message);
+        echo "<a style='color: red'>vojod darad Chand Hashtag?!</a>".isNews($message);
         if (!isNews($message))
         {
             echo "<br>send<br>";
