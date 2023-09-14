@@ -5,13 +5,13 @@ error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
 
-$botToken = "1383022125:AAE2f1svCUBa_Z57gXxUcL6CTNPRXEuKY2I";
+$botToken = "6118892729:AAGnT48LBLv9drP0m8EYWZkczSiu9twbw48";
 $webSite = "https://api.telegram.org/bot" . $botToken;
 
 $update = file_get_contents("php://input");
 $update = json_decode($update, TRUE);
 
-$chatId = "-1001981902360";
+$chatId = "-1001811961712";
 $message = $update["message"]["text"];
 
 $url="https://live.financialjuice.com/FJService.asmx/Startup?info=%22EAAAAC6qHO%2FeBUZ05qlPY5XW4m%2BBm9ZyT5mURrFOXEjWWuZGQijiPRltdmem4mruN5mZDZsNXX34purnD0CIkhSyRnxhzSnkqtYMNgtzhwp0tZab0LW9jlLfF5WVyYhP9o9PLAJLDjEKEOY3q9vDqi9n%2Fj8SPi%2F5PadK3CPjMdp72%2BNIzfUiou9Xb%2FmZJc9s5%2BR9ndm%2FCKNsnHE6muHlb6O531LjdL51EkUKS5k5fd3Kfx1qSybhG7dXVPJwR%2BaYIVWeW2ZDAVwZl%2FTY8PdXL0m36OdXjfFyfBBVRkWTQ3zqc8PL%22&TimeOffset=3.5&tabID=0&oldID=0&TickerID=0&FeedCompanyID=0&strSearch=&extraNID=0";
@@ -23,8 +23,6 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_URL, $url);
 
 curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-
-
     'Referer: https://www.financialjuice.com/',
     'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36',
     'Content-Type: application/json',
@@ -61,7 +59,7 @@ foreach ($row as $value){
         //echo $value;
         $i++;
     }
-    if(preg_match('/Description":"/',$value))
+    if(preg_match('/Description":"/',$value)&&!preg_match('/<script type=/',$value))
     {
         $value=str_replace('Description":""',"",$value);
         $value=str_replace('\n',"",$value);
@@ -70,6 +68,9 @@ foreach ($row as $value){
         $value=str_replace('Description:',"",$value);
         $value=str_replace('<p>',"",$value);
         $value=str_replace('</p>',"",$value);
+        $value=str_replace('<br />',"
+",$value);
+        $value=str_replace('&nbsp;',"",$value);
         $value=str_replace('<ul><li>',"
         
 * ",$value);
@@ -153,9 +154,9 @@ foreach ($row as $value){
 
 function isNews($title){
     $servername = "localhost";
-    $username = "h181246_temp";
-    $password = "00981920";
-    $dbname = "h181246_temp";
+    $username = "adlyst_mobin";
+    $password = "Mobin.mobin7060";
+    $dbname = "adlyst_robot";
 
     try
     {
@@ -178,9 +179,9 @@ function isNews($title){
 }
 function insertNews($news){
     $servername = "localhost";
-    $username = "h181246_temp";
-    $password = "00981920";
-    $dbname = "h181246_temp";
+    $username = "adlyst_mobin";
+    $password = "Mobin.mobin7060";
+    $dbname = "adlyst_robot";
 
     try
     {
